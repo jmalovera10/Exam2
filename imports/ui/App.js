@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {Meteor} from 'meteor/meteor';
 import {withTracker} from "meteor/react-meteor-data";
 import Index from "./index/Index.js";
+import UserIndex from "./index/UserIndex.js";
 import BarChart from "./visualization/BarChart.js";
 import AuthManager from "./authentication/AuthManager.js";
 import NavbarUser from "./navbar/NavbarUser.js";
@@ -13,28 +14,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    letter: "A",
-                    frequency: .08167
-                },
-                {
-                    letter: "B",
-                    frequency: .06167
-                },
-                {
-                    letter: "C",
-                    frequency: .01167
-                },
-                {
-                    letter: "D",
-                    frequency: .03167
-                },
-                {
-                    letter: "E",
-                    frequency: .09167
-                },
-            ],
             location: "index",
             userLocation: "index"
         };
@@ -76,7 +55,7 @@ class App extends Component {
                 }
                 {
                     (this.props.currentUser ?
-                        <BarChart data={this.state.data}/>
+                        <UserIndex fetchRoutes={this.fetchRoutes}/>
                         : (this.state.location === "index" ?
                             <Index goToSignUp={this.goToSignUp} goToLogin={this.goToLogin}/>
                             : <AuthManager isLogin={this.state.location !== "SignUp"} typeAuth={this.state.location}/>))
@@ -96,13 +75,12 @@ export default withTracker(() => {
         return {
             currentUser: Meteor.user(),
             //tones: all,
-        }
-        console.log("hola");
+        };
     }
     else {
         return {
             currentUser: null,
             tones: []
-        }
+        };
     }
 })(App);

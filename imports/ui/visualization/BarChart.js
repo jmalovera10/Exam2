@@ -12,7 +12,7 @@ export default class BarChart extends Component {
         this.update = this.update.bind(this);
     }
 
-    componentWillUpdate(props){
+    componentWillUpdate(props) {
         this.update(props);
     }
 
@@ -32,6 +32,9 @@ export default class BarChart extends Component {
             .attr("class", "axis axis--x")
             .attr("transform", "translate(0," + this.height + ")");
 
+        this.g.append("g")
+            .attr("class", "axis axis--y")
+
         this.update();
     }
 
@@ -50,8 +53,7 @@ export default class BarChart extends Component {
         this.g.select(".axis--x")
             .call(d3.axisBottom(this.x));
 
-        this.g.append("g")
-            .attr("class", "axis axis--y")
+        this.g.select(".axis--y")
             .call(d3.axisLeft(this.y).ticks(10, "%"))
             .append("text")
             .attr("transform", "rotate(-90)")
@@ -60,9 +62,13 @@ export default class BarChart extends Component {
             .attr("text-anchor", "end")
             .text("Frequency");
 
-        this.g.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
+        let bars = this.g.selectAll(".bar")
+            .data(data);
+
+        let barsEnter = bars.enter();
+
+        //Enter
+        barsEnter.append("rect")
             .attr("class", "bar")
             .attr("x", (d) => {
                 return this.x(d.letter);
@@ -74,6 +80,23 @@ export default class BarChart extends Component {
             .attr("height", (d) => {
                 return this.height - this.y(d.frequency);
             });
+
+        //Update
+        bars.select("rect")
+            .attr("class", "bar")
+            .attr("x", (d) => {
+                return this.x(d.letter);
+            })
+            .attr("y", (d) => {
+                return this.y(d.frequency);
+            })
+            .attr("width", this.x.bandwidth())
+            .attr("height", (d) => {
+                return this.height - this.y(d.frequency);
+            });
+
+        //Remove
+        bars.exit().remove();
     }
 
     render() {

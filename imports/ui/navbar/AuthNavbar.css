@@ -1,0 +1,12 @@
+/*----------------
+Auth navbar styles
+ -----------------*/
+
+.appbar-logo{
+    width: 80px;
+    height: auto;
+}
+
+.appbar-logo:hover{
+    cursor: pointer;
+}

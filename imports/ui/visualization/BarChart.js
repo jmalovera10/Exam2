@@ -12,6 +12,10 @@ export default class BarChart extends Component {
         this.update = this.update.bind(this);
     }
 
+    componentWillUpdate(props){
+        this.update(props);
+    }
+
     componentDidMount() {
         const svg = d3.select(this.svg);
 
@@ -24,11 +28,15 @@ export default class BarChart extends Component {
         this.g = svg.append("g")
             .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
+        this.g.append("g")
+            .attr("class", "axis axis--x")
+            .attr("transform", "translate(0," + this.height + ")");
+
         this.update();
     }
 
-    update() {
-        data = this.props.data;
+    update(props) {
+        data = this.props.data || props;
         if (!data) return;
         console.log(data);
 
@@ -39,9 +47,7 @@ export default class BarChart extends Component {
             return d.frequency;
         })]);
 
-        this.g.append("g")
-            .attr("class", "axis axis--x")
-            .attr("transform", "translate(0," + this.height + ")")
+        this.g.select(".axis--x")
             .call(d3.axisBottom(this.x));
 
         this.g.append("g")

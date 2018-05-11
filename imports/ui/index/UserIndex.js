@@ -8,41 +8,20 @@ export default class UserIndex extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    letter: "A",
-                    frequency: .08167
-                },
-                {
-                    letter: "B",
-                    frequency: .06167
-                },
-                {
-                    letter: "C",
-                    frequency: .01167
-                },
-                {
-                    letter: "D",
-                    frequency: .03167
-                },
-                {
-                    letter: "E",
-                    frequency: .09167
-                },
-            ],
+            data: [],
             selectedAgency: ""
         };
-        this.setState({data: Meteor.call('buses.getAgencyList')});
         this.fetchRoutes = this.fetchRoutes.bind(this);
         this.handleAgencySelection = this.handleAgencySelection.bind(this);
     }
 
     fetchRoutes(agencyName) {
         let tag = null;
-        this.state.data.forEach((d)=>{
-            if(d.===this.state.selected)
+        this.state.data.forEach((d) => {
+            if (d.title === this.state.selected) tag = d.tag;
         });
-        Meteor.call('buses.getRoutesByAgency',this.state.selectedAgency);
+        if (tag) Meteor.call('buses.getRoutesByAgency', this.state.selectedAgency);
+        else throw new Error();
     }
 
     handleAgencySelection(e) {
@@ -52,9 +31,9 @@ export default class UserIndex extends Component {
     render() {
         return (
             <div className="row justify-content-around">
-                <h1>THE BOILERPLATE</h1>
+                <h1 className="col-12">THE BOILERPLATE</h1>
                 <div className="col-md-6 col-12">
-                    <BarChart data={this.props.data}/>
+                    <BarChart data={this.state.data}/>
                 </div>
                 <div className="col-md-6 col-12">
                     <form onSubmit={this.fetchRoutes}>

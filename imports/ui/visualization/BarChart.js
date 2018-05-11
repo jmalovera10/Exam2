@@ -39,8 +39,8 @@ export default class BarChart extends Component {
     }
 
     update(props) {
-        data = this.props.data || props;
-        if (!data) return;
+        data = this.props.data || props.data;
+        if (data.length==0) return;
         console.log(data);
 
         this.x.domain(data.map(function (d) {
@@ -71,28 +71,28 @@ export default class BarChart extends Component {
         barsEnter.append("rect")
             .attr("class", "bar")
             .attr("x", (d) => {
-                return this.x(d.letter);
+                return this.x(d.title);
             })
             .attr("y", (d) => {
-                return this.y(d.frequency);
+                return this.y(Math.random());
             })
             .attr("width", this.x.bandwidth())
             .attr("height", (d) => {
-                return this.height - this.y(d.frequency);
+                return this.height - this.y(Math.random());
             });
 
         //Update
         bars.select("rect")
             .attr("class", "bar")
             .attr("x", (d) => {
-                return this.x(d.letter);
+                return this.x(d.title);
             })
             .attr("y", (d) => {
-                return this.y(d.frequency);
+                return this.y(Math.random());
             })
             .attr("width", this.x.bandwidth())
             .attr("height", (d) => {
-                return this.height - this.y(d.frequency);
+                return this.height - this.y(Math.random());
             });
 
         //Remove

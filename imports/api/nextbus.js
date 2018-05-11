@@ -31,9 +31,12 @@ Meteor.methods({
             'GET',
             'http://webservices.nextbus.com/service/publicJSONFeed?command=agencyList'
         ).then((result) => {
-            return JSON.parse(result);
-        })
-            .catch((error) => {
+            let json = JSON.parse(result.content);
+            return json;
+        }).then((result) => {
+            console.log(result);
+            return result.agency;
+        }).catch((error) => {
                 throw new Meteor.Error('500', `${error.message}`);
             });
     },
@@ -43,11 +46,8 @@ Meteor.methods({
             'GET',
             'http://webservices.nextbus.com/service/publicJSONFeed?command=routeList&a=' + agencyTag
         ).then((result) => {
-            return JSON.parse(result);
-        }).then((result) => {
-            return result.agency;
-        })
-            .catch((error) => {
+            return JSON.parse(result.content);
+        }).catch((error) => {
                 throw new Meteor.Error('500', `${error.message}`);
             });
     }

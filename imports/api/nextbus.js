@@ -15,15 +15,6 @@ const callService = (type, url, options) => new Promise((resolve, reject) => {
 });
 
 
-if (Meteor.isServer) {
-
-    // This code only runs on the server
-    Meteor.publish('buses', function tasksPublication() {
-        return Buses.find();
-    });
-
-}
-
 Meteor.methods({
 
     'buses.getAgencyList'() {
@@ -50,5 +41,37 @@ Meteor.methods({
         }).catch((error) => {
                 throw new Meteor.Error('500', `${error.message}`);
             });
+    },
+
+    'buses.getTimeStops'(){
+        return callService(
+            'GET',
+            'http://webservices.nextbus.com/service/publicJSONFeed?command=schedule&a=sf-muni&r=N'
+        ).then((result) => {
+            let json = JSON.parse(result.content);
+            return json;
+        }).then((result) => {
+            let route = result.route[0];
+            console.log(route);
+            return route;
+        }).catch((error) => {
+            throw new Meteor.Error('500', `${error.message}`);
+        });
     }
 });
+
+if (Meteor.isServer) {
+
+    /*let data = Meteor.call('buses.getTimeStops');
+    let exists = Buses.findOne({type:"timestops"});
+    if(!exists){
+        Buses.insert({type:"timestops",data:data});
+    }else{
+        Buses.update({type:"timestops"},{data:data});
+    }*/
+
+    // This code only runs on the server
+    Meteor.publish('buses', function tasksPublication() {
+        return Buses.find();
+    });
+}

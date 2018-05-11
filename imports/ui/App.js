@@ -3,10 +3,10 @@ import {Meteor} from 'meteor/meteor';
 import {withTracker} from "meteor/react-meteor-data";
 import Index from "./index/Index.js";
 import UserIndex from "./index/UserIndex.js";
-import BarChart from "./visualization/BarChart.js";
 import AuthManager from "./authentication/AuthManager.js";
 import NavbarUser from "./navbar/NavbarUser.js";
 import AuthNavbar from "./navbar/AuthNavbar.js";
+import {Buses} from "../api/nextbus.js";
 
 import "./App.css";
 
@@ -23,6 +23,11 @@ class App extends Component {
         this.goToSignUp = this.goToSignUp.bind(this);
         this.goToLogin = this.goToLogin.bind(this);
         this.handleLogoutSubmit = this.handleLogoutSubmit.bind(this);
+        this.getData = this.getData.bind(this);
+    }
+
+    getData(){
+        return Meteor.call("buses.getTimeStops");
     }
 
     goToIndex() {
@@ -55,7 +60,7 @@ class App extends Component {
                 }
                 {
                     (this.props.currentUser ?
-                        <UserIndex fetchRoutes={this.fetchRoutes}/>
+                        <UserIndex fetchRoutes={this.fetchRoutes} getData={this.getData}/>
                         : (this.state.location === "index" ?
                             <Index goToSignUp={this.goToSignUp} goToLogin={this.goToLogin}/>
                             : <AuthManager isLogin={this.state.location !== "SignUp"} typeAuth={this.state.location}/>))
@@ -68,19 +73,18 @@ class App extends Component {
 
 export default withTracker(() => {
     if (Meteor.user()) {
-        /*Meteor.subscribe('tones');
-        let all = Tones.find().fetch();
-        console.log(all);*/
-
+        Meteor.subscribe('buses');
+        let all = Buses.find().fetch();
+        console.log(all);
         return {
             currentUser: Meteor.user(),
-            //tones: all,
+            buses: all,
         };
     }
     else {
         return {
             currentUser: null,
-            tones: []
+            buses: []
         };
     }
 })(App);

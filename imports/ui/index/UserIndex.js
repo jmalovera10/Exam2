@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
-import BarChart from "../visualization/BarChart.js";
+import TimeChart from '../visualization/TimeChart.js';
 
 import "./UserIndex.css";
 
@@ -13,6 +13,7 @@ export default class UserIndex extends Component {
         };
         this.fetchRoutes = this.fetchRoutes.bind(this);
         this.handleAgencySelection = this.handleAgencySelection.bind(this);
+        this.data = this.props.getData();
     }
 
     fetchRoutes(agencyName) {
@@ -33,7 +34,7 @@ export default class UserIndex extends Component {
             <div className="row justify-content-around">
                 <h1 className="col-12">THE BOILERPLATE</h1>
                 <div className="col-md-6 col-12">
-                    <BarChart data={this.state.data}/>
+                    <TimeChart data={this.data}/>
                 </div>
                 <div className="col-md-6 col-12">
                     <form onSubmit={this.fetchRoutes}>

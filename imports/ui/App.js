@@ -23,11 +23,6 @@ class App extends Component {
         this.goToSignUp = this.goToSignUp.bind(this);
         this.goToLogin = this.goToLogin.bind(this);
         this.handleLogoutSubmit = this.handleLogoutSubmit.bind(this);
-        this.getData = this.getData.bind(this);
-    }
-
-    getData(){
-        return Meteor.call("buses.getTimeStops");
     }
 
     goToIndex() {
@@ -60,7 +55,9 @@ class App extends Component {
                 }
                 {
                     (this.props.currentUser ?
-                        <UserIndex fetchRoutes={this.fetchRoutes} getData={this.getData}/>
+                        <UserIndex fetchRoutes={this.fetchRoutes}
+                                   data={this.props.buses}
+                                   agencies={this.props.agencies}/>
                         : (this.state.location === "index" ?
                             <Index goToSignUp={this.goToSignUp} goToLogin={this.goToLogin}/>
                             : <AuthManager isLogin={this.state.location !== "SignUp"} typeAuth={this.state.location}/>))
@@ -78,13 +75,15 @@ export default withTracker(() => {
         console.log(all);
         return {
             currentUser: Meteor.user(),
-            buses: all,
+            buses: all.length > 0 ? all[0].data : [],
+            agencies: all.length > 0 ? all[0].agencies : [],
         };
     }
     else {
         return {
             currentUser: null,
-            buses: []
+            buses: [],
+            agencies:[]
         };
     }
 })(App);

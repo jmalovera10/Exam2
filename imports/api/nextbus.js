@@ -25,11 +25,11 @@ Meteor.methods({
             let json = JSON.parse(result.content);
             return json;
         }).then((result) => {
-            console.log(result);
+            Buses.update({_id:"s2TkLoe7WuivT66ht"}, {$set:{agencies: result.agency}});
             return result.agency;
         }).catch((error) => {
-                throw new Meteor.Error('500', `${error.message}`);
-            });
+            throw new Meteor.Error('500', `${error.message}`);
+        });
     },
 
     'buses.getRoutesByAgency'(agencyTag) {
@@ -39,11 +39,11 @@ Meteor.methods({
         ).then((result) => {
             return JSON.parse(result.content);
         }).catch((error) => {
-                throw new Meteor.Error('500', `${error.message}`);
-            });
+            throw new Meteor.Error('500', `${error.message}`);
+        });
     },
 
-    'buses.getTimeStops'(){
+    'buses.getTimeStops'(callback) {
         return callService(
             'GET',
             'http://webservices.nextbus.com/service/publicJSONFeed?command=schedule&a=sf-muni&r=N'
@@ -52,7 +52,7 @@ Meteor.methods({
             return json;
         }).then((result) => {
             let route = result.route[0];
-            console.log(route);
+            callback(route);
             return route;
         }).catch((error) => {
             throw new Meteor.Error('500', `${error.message}`);
@@ -62,12 +62,16 @@ Meteor.methods({
 
 if (Meteor.isServer) {
 
-    /*let data = Meteor.call('buses.getTimeStops');
-    let exists = Buses.findOne({type:"timestops"});
-    if(!exists){
-        Buses.insert({type:"timestops",data:data});
-    }else{
-        Buses.update({type:"timestops"},{data:data});
+    /*let data = Meteor.call('buses.getTimeStops');*/
+    Meteor.call('buses.getAgencyList');
+    /*let exists = Buses.find();
+    console.log(exists);
+    if (!exists) {
+        console.log("NOT EXISTS");
+        //Buses.insert({type: "timestops", data: data, agencies: agencies});
+    } else {
+        console.log("EXISTS");
+        //Buses.update({_id: }, {$set:{agencies: agencies}});
     }*/
 
     // This code only runs on the server

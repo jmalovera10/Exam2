@@ -9,22 +9,28 @@ export default class TimeChart extends Component {
         this.margin = ({top: 20, right: 30, bottom: 30, left: 150});
     }
 
-    componentDidMount() {
-        let selectedRoute = this.props.data;
-        let buses = () => {
-            let bus = [];
-            for (let bus of selectedRoute.tr) {
-                let route = bus.stop.filter((d) => d.content !== "--");
-                route.forEach((d) => d.date = new Date(+d.epochTime));
-                bus.push(route);
-            }
+    parseData(selectedRoute){
+        let buses = [];
+        console.log(selectedRoute);
+        for (let bus of selectedRoute.tr) {
+            let route = bus.stop.filter((d) => d.content !== "--");
+            route.forEach((d) => d.date = new Date(+d.epochTime));
+            buses.push(route);
+        }
 
-            return bus;
-        };
+        return buses;
+    }
+
+    componentDidUpdate() {
+        let selectedRoute = this.props.data;
+        console.log(selectedRoute);
+        if(!selectedRoute || selectedRoute.length===0)return;
+        let buses = this.parseData(selectedRoute);
         console.log(buses);
-        const height = 600;
+        const height = 500;
+        const width = 900;
         const svg = d3.select(this.svg);
-        const minDate = d3.min(buses[1], d => d.date);
+        const minDate = d3.min(buses[1], (d) => d.date);
         const maxDate = new Date(minDate.getTime() + 22 * 60 * 60 * 1000); // minDate + 24 hours
         const x = d3.scaleTime()
             .domain([minDate, maxDate])
@@ -35,7 +41,7 @@ export default class TimeChart extends Component {
 
         const xAxis = g => g
             .attr("transform", `translate(0,${height - this.margin.bottom})`)
-            .call(d3.axisBottom(x))
+            .call(d3.axisBottom(x));
         // .call(g => g.select(".domain").remove());
         const yAxis = g => g
             .attr("transform", `translate(${this.margin.left},0)`)
@@ -62,13 +68,13 @@ export default class TimeChart extends Component {
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
             .attr("d", line);
-        return svg.node();
+        //return svg.node();
     }
 
     render() {
         return (
-            <svg width={800}
-                 height={600}
+            <svg width={900}
+                 height={500}
                  ref={(svg) => this.svg = svg}
             ></svg>
         );

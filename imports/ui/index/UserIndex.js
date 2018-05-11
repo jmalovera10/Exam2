@@ -8,12 +8,10 @@ export default class UserIndex extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
             selectedAgency: ""
         };
         this.fetchRoutes = this.fetchRoutes.bind(this);
         this.handleAgencySelection = this.handleAgencySelection.bind(this);
-        this.data = this.props.getData();
     }
 
     fetchRoutes(agencyName) {
@@ -30,23 +28,24 @@ export default class UserIndex extends Component {
     }
 
     render() {
+        let agenciesOptions = [];
+        if(this.props.agencies) {
+            this.props.agencies.forEach((a) => {
+                agenciesOptions.push(<option key={a.title}>{a.title}</option>)
+            });
+        }
         return (
             <div className="row justify-content-around">
-                <h1 className="col-12">THE BOILERPLATE</h1>
-                <div className="col-md-6 col-12">
-                    <TimeChart data={this.data}/>
+                <div className="col-md-9 col-12">
+                    <TimeChart data={this.props.data}/>
                 </div>
-                <div className="col-md-6 col-12">
+                <div className="col-md-3 col-12">
                     <form onSubmit={this.fetchRoutes}>
                         <div className="form-group">
                             <label htmlFor="sel1">Select an Agency:</label>
                             <select className="form-control" id="sel1" onChange={this.handleAgencySelection.bind(this)}>
-                                <option></option>
-                                <option>ML</option>
-                                <option>W</option>
-                                <option>FRANCO</option>
-                                <option>CP</option>
-                                <option>SD</option>
+                                <option key={"0"}></option>
+                                {agenciesOptions}
                             </select>
                         </div>
                         <div className="form-group center-items">

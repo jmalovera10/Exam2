@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2e9b436a-656d-4836-aaac-c521e8e8b8c4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/imports/ui/visualization/TimeChart.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/imports/ui/visualization/TimeChart.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imports/api/nextbus.js" beforeDir="false" afterPath="$PROJECT_DIR$/imports/api/nextbus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imports/ui/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/imports/ui/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/imports/ui/index/UserIndex.js" beforeDir="false" afterPath="$PROJECT_DIR$/imports/ui/index/UserIndex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imports/ui/visualization/TimeChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/imports/ui/visualization/TimeChart.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,8 +25,8 @@
           <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/imports/ui/App.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="261">
-                  <caret line="62" column="87" selection-start-line="62" selection-start-column="87" selection-end-line="62" selection-end-column="87" />
+                <state relative-caret-position="207">
+                  <caret line="59" column="67" lean-forward="true" selection-start-line="59" selection-start-column="67" selection-end-line="59" selection-end-column="67" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                   </folding>
@@ -62,8 +61,8 @@
           <file leaf-file-name="UserIndex.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/imports/ui/index/UserIndex.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="35" column="49" lean-forward="true" selection-start-line="35" selection-start-column="49" selection-end-line="35" selection-end-column="49" />
+                <state relative-caret-position="374">
+                  <caret line="46" column="47" selection-start-line="46" selection-start-column="47" selection-end-line="46" selection-end-column="47" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                   </folding>
@@ -74,8 +73,8 @@
           <file leaf-file-name="nextbus.js" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/imports/api/nextbus.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="207">
-                  <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="23" />
+                <state relative-caret-position="159">
+                  <caret line="27" column="30" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
                   <folding>
                     <element signature="e#0#37#0" expanded="true" />
                   </folding>
@@ -90,8 +89,8 @@
           <file leaf-file-name="TimeChart.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/imports/ui/visualization/TimeChart.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="312">
-                  <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+                <state relative-caret-position="380">
+                  <caret line="67" column="45" lean-forward="true" selection-start-line="67" selection-start-column="45" selection-end-line="67" selection-end-column="45" />
                   <folding>
                     <element signature="e#0#39#0" expanded="true" />
                   </folding>
@@ -111,6 +110,11 @@
         <option value="CSS File" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>getdata</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -132,10 +136,10 @@
         <option value="$PROJECT_DIR$/server/main.js" />
         <option value="$PROJECT_DIR$/imports/ui/visualization/BarChart.js" />
         <option value="$PROJECT_DIR$/imports/ui/visualization/TimeChart.css" />
+        <option value="$PROJECT_DIR$/imports/ui/visualization/TimeChart.js" />
         <option value="$PROJECT_DIR$/imports/api/nextbus.js" />
         <option value="$PROJECT_DIR$/imports/ui/App.js" />
         <option value="$PROJECT_DIR$/imports/ui/index/UserIndex.js" />
-        <option value="$PROJECT_DIR$/imports/ui/visualization/TimeChart.js" />
       </list>
     </option>
   </component>
@@ -240,12 +244,12 @@
       <updated>1525904573830</updated>
       <workItem from="1525904578125" duration="7690000" />
       <workItem from="1525968466543" duration="3467000" />
-      <workItem from="1525980958594" duration="14756000" />
+      <workItem from="1525980958594" duration="24854000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25913000" />
+    <option name="totallyTimeSpent" value="36011000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -450,20 +454,10 @@
     <entry file="file://$PROJECT_DIR$/imports/ui/visualization/TimeChart.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/imports/api/nextbus.js">
+    <entry file="file://$PROJECT_DIR$/imports/ui/visualization/TimeChart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="45" column="5" lean-forward="true" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/visualization/BarChart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1785">
-          <caret line="105" column="16" selection-start-line="105" selection-start-column="16" selection-end-line="108" selection-end-column="23" />
+        <state relative-caret-position="380">
+          <caret line="67" column="45" lean-forward="true" selection-start-line="67" selection-start-column="45" selection-end-line="67" selection-end-column="45" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -480,10 +474,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/imports/ui/visualization/BarChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="105" column="16" selection-start-line="105" selection-start-column="16" selection-end-line="108" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imports/api/nextbus.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="159">
+          <caret line="27" column="30" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="62" column="87" selection-start-line="62" selection-start-column="87" selection-end-line="62" selection-end-column="87" />
+        <state relative-caret-position="207">
+          <caret line="59" column="67" lean-forward="true" selection-start-line="59" selection-start-column="67" selection-end-line="59" selection-end-column="67" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>
@@ -492,18 +506,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/index/UserIndex.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="35" column="49" lean-forward="true" selection-start-line="35" selection-start-column="49" selection-end-line="35" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imports/ui/visualization/TimeChart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+        <state relative-caret-position="374">
+          <caret line="46" column="47" selection-start-line="46" selection-start-column="47" selection-end-line="46" selection-end-column="47" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
           </folding>

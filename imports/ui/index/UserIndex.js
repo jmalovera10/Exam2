@@ -79,11 +79,14 @@ export default class UserIndex extends Component {
                     return;
                 }
             });
-            if (agencyTag && routeTag) Meteor.call('buses.getTimeStops', agencyTag, routeTag,
-                (error, result) => {
-                    if (error) console.log(error);
-                    else this.addTimeStops(result);
-                });
+            if (agencyTag && routeTag) {
+                Meteor.call('userHistory.insert',this.state.selectedAgency,this.state.selectedRoute);
+                Meteor.call('buses.getTimeStops', agencyTag, routeTag,
+                    (error, result) => {
+                        if (error) throw error;
+                        else this.addTimeStops(result);
+                    });
+            }
             else throw new Error();
         }
     }

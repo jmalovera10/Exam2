@@ -1,0 +1,13 @@
+.top-all{
+    padding-top: 3%;
+}
+
+.card-top{
+    flex: 1;
+    display: flex;
+    height: 30vh;
+}
+
+.top-searches{
+    overflow-y: scroll;
+}

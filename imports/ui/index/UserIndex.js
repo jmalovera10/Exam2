@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
 import TimeChart from '../visualization/TimeChart.js';
+import History from '../interactions/History.js';
 
 import "./UserIndex.css";
 
@@ -12,7 +13,9 @@ export default class UserIndex extends Component {
             selectedRoute: "",
             agencies: [],
             routes: [],
-            data: []
+            data: [],
+            comments: [],
+            history: []
         };
         this.addAgencies = this.addAgencies.bind(this);
         this.addRoutes = this.addRoutes.bind(this);
@@ -120,25 +123,31 @@ export default class UserIndex extends Component {
                     <TimeChart data={this.state.data}/>
                 </div>
                 <div className="col-md-3 col-12">
-                    <form onSubmit={this.fetchRoutes}>
-                        <div className="form-group">
-                            <label htmlFor="sel1">Select an Agency:</label>
-                            <select className="form-control" id="sel1" onChange={this.handleAgencySelection.bind(this)}>
-                                <option key={0}></option>
-                                {agenciesOptions}
-                            </select>
-                        </div>
-                        {
-                            this.state.selectedAgency !== "" ? <div className="form-group">
-                                <label htmlFor="sel1">Select a Route:</label>
+                    <div className="row">
+                        <form onSubmit={this.fetchRoutes}>
+                            <div className="form-group">
+                                <label htmlFor="sel1">Select an Agency:</label>
                                 <select className="form-control" id="sel1"
-                                        onChange={this.handleRouteSelection.bind(this)}>
+                                        onChange={this.handleAgencySelection.bind(this)}>
                                     <option key={0}></option>
-                                    {routesOptions}
+                                    {agenciesOptions}
                                 </select>
-                            </div> : null
-                        }
-                    </form>
+                            </div>
+                            {
+                                this.state.selectedAgency !== "" ? <div className="form-group">
+                                    <label htmlFor="sel1">Select a Route:</label>
+                                    <select className="form-control" id="sel1"
+                                            onChange={this.handleRouteSelection.bind(this)}>
+                                        <option key={0}></option>
+                                        {routesOptions}
+                                    </select>
+                                </div> : null
+                            }
+                        </form>
+                    </div>
+                    <div className="row">
+                        <History data={this.props.history}/>
+                    </div>
                 </div>
             </div>
         );

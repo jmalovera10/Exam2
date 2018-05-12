@@ -8,16 +8,16 @@ export default class Index extends Component {
         return (
             <div className="row justify-content-around main">
                 <div className="col-md-6 main-visualization center-items">
-                    <h1>Boilerplate V2.0</h1>
+                    <h1>Nextbus Analyzer</h1>
                 </div>
                 <div className="col-md-6 main-interactions center-items">
                     <div className="col-m-12 interactions-content">
                         <h1 className="slogan">
-                            This is a boilerplate
+                            Visualize your routes
                         </h1>
                         <div className="col-md-12">
                             <h3 className="invitation">
-                                Be part of Boilerplate.
+                                Be part of Nextbus Analyzer.
                             </h3>
                         </div>
                         <div className="col-md-12 sign-up-button-container">

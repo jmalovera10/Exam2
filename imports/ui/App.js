@@ -7,6 +7,7 @@ import AuthManager from "./authentication/AuthManager.js";
 import NavbarUser from "./navbar/NavbarUser.js";
 import AuthNavbar from "./navbar/AuthNavbar.js";
 import {Buses} from "../api/nextbus.js";
+import {UserHistory} from "../api/userHistory";
 
 import "./App.css";
 
@@ -55,9 +56,8 @@ class App extends Component {
                 }
                 {
                     (this.props.currentUser ?
-                        <UserIndex fetchRoutes={this.fetchRoutes}
-                                   data={this.props.buses}
-                                   agencies={this.props.agencies}/>
+                        <UserIndex history={this.props.history}
+                        />
                         : (this.state.location === "index" ?
                             <Index goToSignUp={this.goToSignUp} goToLogin={this.goToLogin}/>
                             : <AuthManager isLogin={this.state.location !== "SignUp"} typeAuth={this.state.location}/>))
@@ -70,19 +70,16 @@ class App extends Component {
 
 export default withTracker(() => {
     if (Meteor.user()) {
-        Meteor.subscribe('buses');
-        let all = Buses.find().fetch();
+        Meteor.subscribe('userHistory');
+        let history = UserHistory.find().fetch();
         return {
             currentUser: Meteor.user(),
-            buses: all.length > 0 ? all[0].data : [],
-            agencies: all.length > 0 ? all[0].agencies : [],
+            history:history
         };
     }
     else {
         return {
             currentUser: null,
-            buses: [],
-            agencies:[]
         };
     }
 })(App);

@@ -8,36 +8,118 @@ export default class UserIndex extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedAgency: ""
+            selectedAgency: "",
+            selectedRoute: "",
+            agencies: [],
+            routes: [],
+            data: []
         };
+        this.addAgencies = this.addAgencies.bind(this);
+        this.addRoutes = this.addRoutes.bind(this);
+        this.addTimeStops = this.addAgencies.bind(this);
         this.fetchRoutes = this.fetchRoutes.bind(this);
         this.handleAgencySelection = this.handleAgencySelection.bind(this);
     }
 
-    fetchRoutes(agencyName) {
+    componentDidMount() {
+        if (this.state.agencies.length === 0) {
+            Meteor.call('buses.getAgencyList', (error, result) => {
+                if (error) console.log(error);
+                else this.addAgencies(result);
+            });
+        }
+    }
+
+    addAgencies(agencies) {
+        this.setState({agencies: agencies});
+    }
+
+    addRoutes(routes) {
+        this.setState({routes: routes});
+    }
+
+    addTimeStops(data) {
+        this.setState({data: data});
+    }
+
+    fetchRoutes() {
         let tag = null;
-        this.state.data.forEach((d) => {
-            if (d.title === this.state.selected) tag = d.tag;
-        });
-        if (tag) Meteor.call('buses.getRoutesByAgency', this.state.selectedAgency);
-        else throw new Error();
+        if (this.state.selectedAgency !== "") {
+            this.state.agencies.forEach((d) => {
+                if (d.title === this.state.selectedAgency) {
+                    console.log("entra");
+                    tag = d.tag;
+                    return;
+                }
+            });
+            if (tag) Meteor.call('buses.getRoutesByAgency', tag, (error, result) => {
+                if (error) console.log(error);
+                else this.addRoutes(result);
+            });
+            else throw new Error();
+        }
+    }
+
+    fetchTimeStops() {
+        let agencyTag = null;
+        let routeTag = null;
+        if (this.state.selectedAgency !== "" && this.state.selectedRoute !== "") {
+            this.state.agencies.forEach((d) => {
+                if (d.title === this.state.selectedAgency) {
+                    console.log("entra");
+                    agencyTag = d.tag;
+                    return;
+                }
+            });
+            this.state.routes.forEach((d) => {
+                if (d.title === this.state.selectedRoute) {
+                    console.log("entra");
+                    routeTag = d.tag;
+                    return;
+                }
+            });
+            if (agencyTag && routeTag) Meteor.call('buses.getTimeStops', agencyTag, routeTag,
+                (error, result) => {
+                    if (error) console.log(error);
+                    else this.addTimeStops(result);
+                });
+            else throw new Error();
+        }
     }
 
     handleAgencySelection(e) {
-        this.setState({selectedAgency: e.target.value});
+        let val = e.target.value;
+        this.setState({selectedAgency: val}, () => {
+            this.fetchRoutes();
+        });
+    }
+
+    handleRouteSelection(e) {
+        let val = e.target.value;
+        this.setState({selectedRoute: val}, () => {
+            this.fetchTimeStops();
+        });
     }
 
     render() {
         let agenciesOptions = [];
-        if(this.props.agencies) {
-            this.props.agencies.forEach((a) => {
-                agenciesOptions.push(<option key={a.title}>{a.title}</option>)
+        if (this.state.agencies.length > 0) {
+            let i = 1;
+            this.state.agencies.forEach((a) => {
+                agenciesOptions.push(<option key={i}>{a.title}</option>);
+                i++;
+            });
+        }
+        let routesOptions = [];
+        if (this.state.routes.length > 0) {
+            this.state.routes.forEach((r) => {
+                routesOptions.push(<option key={r.title}>{r.title}</option>)
             });
         }
         return (
             <div className="row justify-content-around">
                 <div className="col-md-9 col-12">
-                    <TimeChart data={this.props.data}/>
+                    <TimeChart data={this.state.data}/>
                 </div>
                 <div className="col-md-3 col-12">
                     <form onSubmit={this.fetchRoutes}>
@@ -48,14 +130,16 @@ export default class UserIndex extends Component {
                                 {agenciesOptions}
                             </select>
                         </div>
-                        <div className="form-group center-items">
-                            <button type="submit"
-                                    className="btn auth-button"
-                                //disabled={this.props.disableButton}
-                                    aria-label="submit button">
-                                Registrar
-                            </button>
-                        </div>
+                        {
+                            this.state.selectedAgency !== "" ? <div className="form-group">
+                                <label htmlFor="sel1">Select a Route:</label>
+                                <select className="form-control" id="sel1"
+                                        onChange={this.handleRouteSelection.bind(this)}>
+                                    <option key={"0"}></option>
+                                    {routesOptions}
+                                </select>
+                            </div> : null
+                        }
                     </form>
                 </div>
             </div>

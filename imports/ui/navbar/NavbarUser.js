@@ -22,8 +22,6 @@ export default class NavbarUser extends Component {
             <div className="navbar-user">
                 <MuiThemeProvider>
                     <AppBar
-                        title={<img src="MinEmotionerLogo.PNG" alt="emotioner_min_logo"
-                                    className="col-4 col-md-1 appbar-logo" onClick={this.props.goToIndex}/>}
                         iconElementLeft={
                             <IconMenu
                                 iconButtonElement={<IconButton aria-label="Button that expands the menu"

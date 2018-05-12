@@ -72,7 +72,6 @@ export default withTracker(() => {
     if (Meteor.user()) {
         Meteor.subscribe('buses');
         let all = Buses.find().fetch();
-        console.log(all);
         return {
             currentUser: Meteor.user(),
             buses: all.length > 0 ? all[0].data : [],

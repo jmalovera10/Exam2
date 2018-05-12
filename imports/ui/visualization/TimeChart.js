@@ -20,8 +20,8 @@ export default class TimeChart extends Component {
 
         return buses;
     }
-
-    componentDidUpdate() {
+    
+    componentDidMount() {
         let selectedRoute = this.props.data;
         console.log(selectedRoute);
         if(!selectedRoute || selectedRoute.length===0)return;
@@ -58,9 +58,10 @@ export default class TimeChart extends Component {
         svg.append("g")
             .call(yAxis);
 
-        svg.selectAll(".routes")
-            .data(buses)
-            .enter()
+        let routes = svg.selectAll(".routes")
+            .data(buses);
+        let routesEnter = routes.enter();
+        routesEnter
             .append("path")
             .attr("fill", "none")
             .attr("stroke", "steelblue")
@@ -68,7 +69,19 @@ export default class TimeChart extends Component {
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
             .attr("d", line);
-        //return svg.node();
+
+        routes
+            .append("path")
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 2)
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("d", line);
+
+        routes.exit().remove();
+
+        return svg.node();
     }
 
     render() {

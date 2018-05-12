@@ -25,34 +25,40 @@ Meteor.methods({
             let json = JSON.parse(result.content);
             return json;
         }).then((result) => {
-            Buses.update({_id:"s2TkLoe7WuivT66ht"}, {$set:{agencies: result.agency}});
-            return result.agency;
+            //Buses.update({_id:"s2TkLoe7WuivT66ht"}, {$set:{agencies: result.agency}});
+            let agencies = result.agency;
+            return agencies;
         }).catch((error) => {
             throw new Meteor.Error('500', `${error.message}`);
         });
     },
 
     'buses.getRoutesByAgency'(agencyTag) {
+        let url = 'http://webservices.nextbus.com/service/publicJSONFeed?command=routeList&a=' + agencyTag;
         return callService(
             'GET',
-            'http://webservices.nextbus.com/service/publicJSONFeed?command=routeList&a=' + agencyTag
+            url
         ).then((result) => {
             return JSON.parse(result.content);
-        }).catch((error) => {
+        }).then(((result) =>{
+            let routes = result.route;
+            return routes;
+        })).catch((error) => {
             throw new Meteor.Error('500', `${error.message}`);
         });
     },
 
-    'buses.getTimeStops'(callback) {
+    'buses.getTimeStops'(agencyTag,routeName) {
+        let url = 'http://webservices.nextbus.com/service/publicJSONFeed?command=schedule&a='+agencyTag+'&r='+routeName;
         return callService(
             'GET',
-            'http://webservices.nextbus.com/service/publicJSONFeed?command=schedule&a=sf-muni&r=N'
+            url
         ).then((result) => {
             let json = JSON.parse(result.content);
             return json;
         }).then((result) => {
             let route = result.route[0];
-            callback(route);
+            console.log(route);
             return route;
         }).catch((error) => {
             throw new Meteor.Error('500', `${error.message}`);
@@ -63,7 +69,7 @@ Meteor.methods({
 if (Meteor.isServer) {
 
     /*let data = Meteor.call('buses.getTimeStops');*/
-    Meteor.call('buses.getAgencyList');
+    //Meteor.call('buses.getAgencyList');
     /*let exists = Buses.find();
     console.log(exists);
     if (!exists) {

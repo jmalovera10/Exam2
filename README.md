@@ -4,7 +4,7 @@ Final Exam of Web Development at Universidad de los Andes
 ## Description
 Is a web based application usign Meteor, React and D3 to visualize the NextBus routes
 
-##Requirements
+## Requirements
 - Meteor
 - React
 

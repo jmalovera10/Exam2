@@ -16,8 +16,9 @@ export default class UserIndex extends Component {
         };
         this.addAgencies = this.addAgencies.bind(this);
         this.addRoutes = this.addRoutes.bind(this);
-        this.addTimeStops = this.addAgencies.bind(this);
+        this.addTimeStops = this.addTimeStops.bind(this);
         this.fetchRoutes = this.fetchRoutes.bind(this);
+        this.fetchTimeStops = this.fetchTimeStops.bind(this);
         this.handleAgencySelection = this.handleAgencySelection.bind(this);
     }
 
@@ -47,7 +48,6 @@ export default class UserIndex extends Component {
         if (this.state.selectedAgency !== "") {
             this.state.agencies.forEach((d) => {
                 if (d.title === this.state.selectedAgency) {
-                    console.log("entra");
                     tag = d.tag;
                     return;
                 }
@@ -66,14 +66,12 @@ export default class UserIndex extends Component {
         if (this.state.selectedAgency !== "" && this.state.selectedRoute !== "") {
             this.state.agencies.forEach((d) => {
                 if (d.title === this.state.selectedAgency) {
-                    console.log("entra");
                     agencyTag = d.tag;
                     return;
                 }
             });
             this.state.routes.forEach((d) => {
                 if (d.title === this.state.selectedRoute) {
-                    console.log("entra");
                     routeTag = d.tag;
                     return;
                 }
@@ -126,7 +124,7 @@ export default class UserIndex extends Component {
                         <div className="form-group">
                             <label htmlFor="sel1">Select an Agency:</label>
                             <select className="form-control" id="sel1" onChange={this.handleAgencySelection.bind(this)}>
-                                <option key={"0"}></option>
+                                <option key={0}></option>
                                 {agenciesOptions}
                             </select>
                         </div>
@@ -135,7 +133,7 @@ export default class UserIndex extends Component {
                                 <label htmlFor="sel1">Select a Route:</label>
                                 <select className="form-control" id="sel1"
                                         onChange={this.handleRouteSelection.bind(this)}>
-                                    <option key={"0"}></option>
+                                    <option key={0}></option>
                                     {routesOptions}
                                 </select>
                             </div> : null

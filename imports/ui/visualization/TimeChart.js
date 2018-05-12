@@ -7,6 +7,7 @@ export default class TimeChart extends Component {
     constructor(props) {
         super(props);
         this.margin = ({top: 20, right: 30, bottom: 30, left: 150});
+        this.update = this.update.bind(this);
     }
 
     parseData(selectedRoute){
@@ -20,48 +21,51 @@ export default class TimeChart extends Component {
 
         return buses;
     }
-    
-    componentDidMount() {
-        let selectedRoute = this.props.data;
+
+    componentWillUpdate(props) {
+        let selectedRoute = props.data;
         console.log(selectedRoute);
+        this.height = 500;
+        this.width = 900;
+        this.svg = d3.select(this.svg);
+        this.x = d3.scaleTime()
+            .range([this.margin.left, this.width - this.margin.right]);
+        this.y = d3.scaleBand()
+            .rangeRound([this.height - this.margin.bottom, this.margin.top]);
+
+        this.update(selectedRoute);
+        //return svg.node();
+    }
+
+    update(selectedRoute){
         if(!selectedRoute || selectedRoute.length===0)return;
         let buses = this.parseData(selectedRoute);
-        console.log(buses);
-        const height = 500;
-        const width = 900;
-        const svg = d3.select(this.svg);
-        const minDate = d3.min(buses[1], (d) => d.date);
-        const maxDate = new Date(minDate.getTime() + 22 * 60 * 60 * 1000); // minDate + 24 hours
-        const x = d3.scaleTime()
-            .domain([minDate, maxDate])
-            .range([this.margin.left, width - this.margin.right]);
-        const y = d3.scaleBand()
-            .domain(d3.range(buses[1].length))
-            .rangeRound([height - this.margin.bottom, this.margin.top]);
-
+        minDate = d3.min(buses[1], (d) => d.date);
+        maxDate = new Date(minDate.getTime() + 22 * 60 * 60 * 1000); // minDate + 24 hours
+        this.x.domain([minDate, maxDate]);
+        this.y.domain(d3.range(buses[1].length));
         const xAxis = g => g
-            .attr("transform", `translate(0,${height - this.margin.bottom})`)
-            .call(d3.axisBottom(x));
+            .attr("transform", `translate(0,${this.height - this.margin.bottom})`)
+            .call(d3.axisBottom(this.x));
         // .call(g => g.select(".domain").remove());
         const yAxis = g => g
             .attr("transform", `translate(${this.margin.left},0)`)
-            .call(d3.axisLeft(y)
+            .call(d3.axisLeft(this.y)
                 .tickFormat((d) => selectedRoute.header.stop[d].content));
 
         const line = d3.line()
-            .x(d => x(d.date))
-            .y((d, i) => y(i) + y.bandwidth() / 2);
+            .x(d => this.x(d.date))
+            .y((d, i) => this.y(i) + this.y.bandwidth() / 2);
 
-        svg.append("g")
+        this.svg.append("g")
             .call(xAxis);
 
-        svg.append("g")
+        this.svg.append("g")
             .call(yAxis);
 
-        let routes = svg.selectAll(".routes")
-            .data(buses);
-        let routesEnter = routes.enter();
-        routesEnter
+        this.svg.selectAll(".routes")
+            .data(buses)
+            .enter()
             .append("path")
             .attr("fill", "none")
             .attr("stroke", "steelblue")
@@ -69,19 +73,6 @@ export default class TimeChart extends Component {
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
             .attr("d", line);
-
-        routes
-            .append("path")
-            .attr("fill", "none")
-            .attr("stroke", "steelblue")
-            .attr("stroke-width", 2)
-            .attr("stroke-linejoin", "round")
-            .attr("stroke-linecap", "round")
-            .attr("d", line);
-
-        routes.exit().remove();
-
-        return svg.node();
     }
 
     render() {

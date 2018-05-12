@@ -58,7 +58,6 @@ Meteor.methods({
             return json;
         }).then((result) => {
             let route = result.route[0];
-            console.log(route);
             return route;
         }).catch((error) => {
             throw new Meteor.Error('500', `${error.message}`);

@@ -2,8 +2,10 @@ import React, {Component} from 'react';
 import {Meteor} from 'meteor/meteor';
 import TimeChart from '../visualization/TimeChart.js';
 import History from '../interactions/History.js';
+import Comments from '../interactions/Comments.js';
 
 import "./UserIndex.css";
+import Comments from "../interactions/Comments";
 
 export default class UserIndex extends Component {
     constructor(props) {
@@ -15,7 +17,8 @@ export default class UserIndex extends Component {
             routes: [],
             data: [],
             comments: [],
-            history: []
+            history: [],
+            comment: ""
         };
         this.addAgencies = this.addAgencies.bind(this);
         this.addRoutes = this.addRoutes.bind(this);
@@ -23,6 +26,7 @@ export default class UserIndex extends Component {
         this.fetchRoutes = this.fetchRoutes.bind(this);
         this.fetchTimeStops = this.fetchTimeStops.bind(this);
         this.handleAgencySelection = this.handleAgencySelection.bind(this);
+        this.handleComment = this.handleComment.bind(this);
     }
 
     componentDidMount() {
@@ -105,6 +109,10 @@ export default class UserIndex extends Component {
         });
     }
 
+    handleComment(c){
+        this.setState({comment:c});
+    }
+
     render() {
         let agenciesOptions = [];
         if (this.state.agencies.length > 0) {
@@ -147,6 +155,9 @@ export default class UserIndex extends Component {
                                 </div> : null
                             }
                         </form>
+                    </div>
+                    <div className="row">
+                        <Comments handleComment={this.handleComment}/>
                     </div>
                     <div className="row">
                         <History data={this.props.history}/>
